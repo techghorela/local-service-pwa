@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>लोकल सर्विस हब</title>
+    <!-- PWA Manifest Link -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#0056b3">
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; background-color: #f4f4f9; }
+        header { background: #0056b3; color: white; padding: 15px; text-align: center; }
+        .services { display: flex; flex-wrap: wrap; justify-content: center; padding: 20px; }
+        .card { background: white; margin: 10px; padding: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); width: 150px; text-align: center; cursor: pointer; }
+        .card:hover { transform: scale(1.05); }
+        .install-btn { display: none; margin: 20px auto; padding: 10px 20px; background: #28a745; color: white; border: none; border-radius: 5px; font-size: 16px; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>लोकल सर्विस हब</h1>
+        <p>एक क्लिक में मिस्त्री, प्लंबर और इलेक्ट्रीशियन बुलाएं</p>
+    </header>
+
+    <button id="installApp" class="install-btn">ऐप इंस्टॉल करें</button>
+
+    <div class="services">
+        <div class="card">
+            <h3>🚰 प्लंबर</h3>
+            <p>पाइप और नल फिटिंग</p>
+        </div>
+        <div class="card">
+            <h3>⚡ इलेक्ट्रीशियन</h3>
+            <p>बिजली और वायरिंग</p>
+        </div>
+        <div class="card">
+            <h3>👷 मजदूर</h3>
+            <p>दिहाड़ी और लेबर कार्य</p>
+        </div>
+        <div class="card">
+            <h3>🛠️ मिस्त्री</h3>
+            <p>चिनाई और निर्माण</p>
+        </div>
+    </div>
+
+    <script>
+        // सर्विस वर्कर रजिस्टर करना (ऑफ़लाइन सपोर्ट के लिए)
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js').then(() => {
+                console.log('Service Worker Registered');
+            });
+        }
+
+        // इंस्टॉल बटन का लॉजिक
+        let deferredPrompt;
+        const installBtn = document.getElementById('installApp');
+        
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            installBtn.style.display = 'block';
+        });
+
+        installBtn.addEventListener('click', async () => {
+            installBtn.style.display = 'none';
+            deferredPrompt.prompt();
+            const { outcome } = await deferredPrompt.userChoice;
+            deferredPrompt = null;
+        });
+    </script>
+</body>
+</html>

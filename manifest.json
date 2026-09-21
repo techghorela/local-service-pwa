@@ -1,0 +1,16 @@
+{
+  "name": "लोकल सर्विस हब",
+  "short_name": "सर्विस हब",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0056b3",
+  "description": "प्लंबर, इलेक्ट्रीशियन और मजदूरों को बुक करने का आसान प्लेटफॉर्म",
+  "icons": [
+    {
+      "src": "icon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
